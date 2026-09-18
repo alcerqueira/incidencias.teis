@@ -18,7 +18,7 @@ Recibe peticiones HTTP y devuelve recursos al navegador
 ## Proceso de instalación / puesta en marcha
 
 1. Actualizar el sistema
-```
+```bash
 sudo apt update
 sudo apt upgrade
 ```
@@ -32,18 +32,65 @@ sudo apt install git
 4. Instalar Apache2
 `sudo apt install apache2`
 5. Cambiar permisos carpeta /var/www/html
-```
+```bash
 sudo chown -R $user:$user /var/www/html
 sudo chmod -R u=rwx,go=rx /var/www/html
 ```
-6. Crear un archivo index html en la carpeta /var/www/incidencias.teis con la página principal de incidencias.
+6. Configuración apache
+
+   -  Crear un archivo index html en la carpeta /var/www/incidencias.teis con la página principal de incidencias.
    
-7. Hacer visible la página con el nombre incidencias.teis en la configuración de apache.
+   - Hacer visible la página con el nombre incidencias.teis en la configuración de apache.
 
-![apache-configuracion](/home/alumno/Incidencias-AlbertoL/Images/apache-configuracion.png)
+![apache-configuracion](Images/apache-configuracion.png)
 
-8. Desactivar el sitio configurado por defecto en apache
-`sudo a2dissite 000-default.conf`
+   - Desactivar el sitio configurado por defecto en apache
+```bash
+sudo a2dissite 000-default.conf
+```
 
-9. Activar el sitio de incidencias.teis 
-``
+   - Activar el sitio de incidencias.teis 
+```bash
+sudo a2ensite incidencias.teis.conf
+```
+
+7. Instalar mysql server
+
+```bash
+sudo apt install mysql-server
+```
+
+8. Configuración mysql
+```sql
+-- crear la base de datos incidencias
+create database incidencias;
+
+-- crear el usuario incidencias
+create user 'incidencias'@'localhost' identified by 'incidencias';
+
+-- darle todos los permisos al usuario incidencias para toda la base de datos incidencias
+grant all privileges on incidencias.* to 'incidencias'@'localhost';
+
+-- crear la tabla de los registros de las incidencias
+create table registro( id int auto_increment primary key, aula varchar(30), usuario varchar(20), descripcion text, estado varchar(30) );
+
+-- crear registros de prueba
+insert into registro (aula, usuario, descripcion, estado) values ('Taller 1', 'alcerqueira', 'PC 24 no arranca', 'ABIERTA'),('Taller 1', 'alcerqueira', 'Proyector no se ve nitido', 'ABIERTA');
+```
+
+## Configuración de git/github
+
+1. Crear repositorio local, añadir archivos y commit
+```bash
+git init
+git add .
+git commit -m "comentario"
+```
+2. Crear cuenta github, crear repositorio en github.
+
+3. Conectar repositorio local con remoto
+```bash
+git remote add origin url-repositorio
+git branch -M main
+git push -u origin main
+```
