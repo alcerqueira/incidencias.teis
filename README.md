@@ -28,6 +28,7 @@ sudo apt install git
 ```
 3. Instalar VS Code + Plugins:
     - Markdown all in one
+    - Python
 
 4. Instalar Apache2
 `sudo apt install apache2`
@@ -78,6 +79,97 @@ create table registro( id int auto_increment primary key, aula varchar(30), usua
 insert into registro (aula, usuario, descripcion, estado) values ('Taller 1', 'alcerqueira', 'PC 24 no arranca', 'ABIERTA'),('Taller 1', 'alcerqueira', 'Proyector no se ve nitido', 'ABIERTA');
 ```
 
+9. Instalar Python y componentes relacionados.
+```bash
+sudo apt install python3 python3-pip python3-venv -y
+```
+
+10. Crear entorno virtual.
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+
+11. Instalar Flask y mysql-connector para poder conectar el mysql con python.
+```bash
+pip install flask
+pip install mysql-connector-python
+pip list
+pip freeze > requirements.txt
+```
+
+## Rutina de trabajo con flask (venv)
+
+Al empezar:
+```bash
+cd /home/alumno/Incidencias-AlbertoL
+source venv/bin/activate
+python app.py #Lanzar app
+```
+
+Al terminar:
+```bash
+deactivate
+```
+## Aplicación Python/Flask
+
+1. Aplicación inicial (app.py)
+```python
+  from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def inicio():
+    return "<h1>Incidencias IES Teis</h1>"
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+2. Ejecutar aplicación.
+
+`python3 app.py`
+
+3. Comprobar abriendo http://incidencias.teis:5000
+
+## Migración del formulario a Python/Flask
+
+1. Crear carpeta templates y mover el archivo index.html
+
+2. Modificar app.py:
+```python
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def inicio():
+    return render_template("index.html")
+if __name__ == "__main__":
+    app.run(debug=True)
+```
+
+3. Comprobar abriendo http://incidencias.teis:5000
+
+## Recibir los datos del formulario
+
+1. Importar request.
+
+2. Añadir ruta en app.py para recibir los datos del formulario:
+```python
+@app.route("/incidencia", methods=["POST"])
+def crear_incidencia():
+    aula = request.form["aula"]
+    usuario = request.form["usuario"]
+    descripcion = request.form["descripcion"]
+
+    print("Aula:" + aula)
+    print("Usuario:" + usuario)
+    print("Descripcion:" + descripcion)
+
+    return "Incidencia recibida"
+```
+
 ## Configuración de git/github
 
 1. Crear repositorio local, añadir archivos y commit
@@ -86,6 +178,7 @@ git init
 git add .
 git commit -m "comentario"
 ```
+
 2. Crear cuenta github, crear repositorio en github.
 
 3. Conectar repositorio local con remoto
@@ -94,3 +187,11 @@ git remote add origin url-repositorio
 git branch -M main
 git push -u origin main
 ```
+
+4. Clonar repositorio en otro sistema/directorio.
+
+`git clone url-repositorio`
+
+5. Actualizar repositorio subido en github.
+
+`git pull`
