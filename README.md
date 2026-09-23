@@ -163,11 +163,50 @@ def crear_incidencia():
     usuario = request.form["usuario"]
     descripcion = request.form["descripcion"]
 
-    print("Aula:" + aula)
-    print("Usuario:" + usuario)
-    print("Descripcion:" + descripcion)
+    print("Aula: " + aula)
+    print("Usuario: " + usuario)
+    print("Descripcion: " + descripcion)
 
-    return "Incidencia recibida"
+    return "<h1>Incidencia recibida</h1><ul><li>Aula: " + aula + "</li></ul>"
+```
+
+## Introducir los datos en la BD
+
+1. Importar el conector de mySQL después de las importaciones de Flask:
+```python
+import mysql.connector
+```
+
+2. Añadir después de los print en la ruta de /incidencias.
+```python
+conexion = mysql.connector.connect(
+    host="localhost",
+    user="incidencias",
+    password="incidencias",
+    database="incidencias"
+)
+
+cursor = conexion.cursor()
+
+sql = """
+    INSERT INTO registros
+    (aula, usuario, descripcion, estado)
+    VALUES (%s, %s, %s, %s)
+"""
+
+valores = (
+    aula,
+    usuario,
+    descripcion,
+    "Abierta"
+)
+
+cursor.execute(sql, valores)
+
+conexion.commit()
+
+cursor.close()
+conexion.close()
 ```
 
 ## Configuración de git/github
