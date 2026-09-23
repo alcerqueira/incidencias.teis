@@ -46,7 +46,15 @@ def crear_incidencia():
     cursor.close()
     conexion.close()
 
-    return "<h1>Incidencia recibida</h1><ul><li>Aula: " + aula + "</li></ul>"
+    return f"""
+        <h1>Incidencia creada correctamente</h1>
+        <ul>
+            <li>Aula: {aula}</li>
+            <li>Usuario: {usuario}</li>
+            <li>Descripcion: {descripcion}</li>
+            <li>Estado: Abierta</li>
+        </ul>
+    """
 
 if __name__ == "__main__":
     app.run(debug=True)

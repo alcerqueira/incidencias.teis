@@ -13,7 +13,23 @@
 
 ## ¿Qué hace un servidor web?
 
-Recibe peticiones HTTP y devuelve recursos al navegador
+Recibe peticiones HTTP y devuelve recursos al navegador.
+
+## ¿Qué hace una base de datos?
+
+Almacena datos en forma de registros en tablas.
+
+## ¿Qué hace un lenguaje de servidor?
+
+Con el se programan aplicaciones que se ejcutan en el servidor.
+
+## ¿Qué hace el framework Flask?
+
+Con este framework el lenguaje python podrá acceder a las bases de datos de mysql además de otras funciones web.
+
+## ¿Qué hace un control de versiones?
+
+Lleva un registro de todos los archivos que hay en un directorio y de sus cambios, de modo que si se producen cambios que perjudican al funcionamiento del proyecto se puede volver atras en los cambios de los archivos.
 
 ## Proceso de instalación / puesta en marcha
 
@@ -43,17 +59,17 @@ sudo chmod -R u=rwx,go=rx /var/www/html
    
    - Hacer visible la página con el nombre incidencias.teis en la configuración de apache.
 
-![apache-configuracion](Images/apache-configuracion.png)
+    ![apache-configuracion](Images/apache-configuracion.png)
 
    - Desactivar el sitio configurado por defecto en apache
-```bash
-sudo a2dissite 000-default.conf
-```
+    ```bash
+    sudo a2dissite 000-default.conf
+    ```
 
    - Activar el sitio de incidencias.teis 
-```bash
-sudo a2ensite incidencias.teis.conf
-```
+    ```bash
+    sudo a2ensite incidencias.teis.conf
+    ```
 
 7. Instalar mysql server
 
